@@ -1,4 +1,4 @@
-package eu.nazgee.simple;
+package eu.nazgee.astro;
 
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;

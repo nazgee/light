@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<texture version="1" file="TextureMain.png" type="bitmap" width="1024" height="1024" pixelformat="RGBA_8888" minfilter="linear" magfilter="linear" wrapt="clamp" wraps="clamp" premultiplyalpha="false">
+    <!-- Created with TexturePacker http://texturepacker.com -->
+    <!-- $TexturePacker:SmartUpdate:bcdded1a0a9b0ae8f019cd8fc8194c3b$ -->
+    <textureregion id="0" src="bg/bg.png" x="4" y="4" width="512" height="512" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="512" srcheight="512"/>
+    <textureregion id="1" src="misc/burst.png" x="58" y="956" width="32" height="32" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="32" srcheight="32"/>
+    <textureregion id="2" src="misc/flare.png" x="4" y="720" width="128" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="128" srcheight="128"/>
+    <textureregion id="3" src="misc/target.png" x="4" y="956" width="48" height="48" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="48" srcheight="48"/>
+    <textureregion id="4" src="props/rocket.png" x="202" y="522" width="96" height="96" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="96" srcheight="96"/>
+    <textureregion id="5" src="props/sun.png" x="4" y="522" width="192" height="192" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="192" srcheight="192"/>
+    <textureregion id="6" src="props/surface-01.png" x="138" y="720" width="96" height="96" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="96" srcheight="96"/>
+    <textureregion id="7" src="props/surface-05.png" x="106" y="854" width="96" height="96" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="96" srcheight="96"/>
+    <textureregion id="8" src="props/surface-11.png" x="4" y="854" width="96" height="96" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="96" srcheight="96"/>
+</texture>

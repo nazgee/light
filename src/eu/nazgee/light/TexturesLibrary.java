@@ -8,6 +8,7 @@ import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.render.RenderTexture;
 import org.andengine.util.adt.color.Color;
 import org.andengine.util.debug.Debug;
 import org.andengine.util.texturepack.TexturePack;
@@ -32,6 +33,7 @@ public class TexturesLibrary {
 	// have always loaded
 	private final Context mContext;
 	private TexturePack mSpritesheetMain;
+	private RenderTexture mRenderTexture;
 
 	// ===========================================================
 	// Constructors
@@ -44,8 +46,16 @@ public class TexturesLibrary {
 	// Getter & Setter
 	// ===========================================================
 
+	public RenderTexture getRenderTexture() {
+		return mRenderTexture;
+	}
+
 	public TexturePackTextureRegion getRocket() {
 		return mSpritesheetMain.getTexturePackTextureRegionLibrary().get(TextureMain.PROPS_ROCKET_ID);
+	}
+
+	public TexturePackTextureRegion getSun() {
+		return mSpritesheetMain.getTexturePackTextureRegionLibrary().get(TextureMain.PROPS_SUN_ID);
 	}
 //
 //	public ITiledTextureRegion getPropTeleport() {
@@ -100,6 +110,8 @@ public class TexturesLibrary {
 		mFont = FontFactory.createFromAsset(fontManager, mFontAtlas, c.getAssets(), Globals.FONT_NAME, Globals.FONT_SIZE, true,
 				Color.WHITE.getARGBPackedInt());
 		mFont.load();
+
+		mRenderTexture = new RenderTexture(e.getTextureManager(), Globals.CAMERA_WIDTH, Globals.CAMERA_HEIGHT);
 	}
 
 	public void unload() {

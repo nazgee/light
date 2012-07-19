@@ -16,6 +16,8 @@ import org.andengine.opengl.util.GLState;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.adt.color.Color;
 
+import android.opengl.GLES20;
+
 import eu.nazgee.utils.OffscreenEntity;
 import eu.nazgee.utils.OffscreenSprite;
 
@@ -73,6 +75,7 @@ public class MainScene extends Scene{
 		// Prepare sprite which will display offscreen-generated stuff
 		Sprite resultSprite2 = new Sprite(400, 300, TextureRegionFactory.extractFromTexture(mRenderTexture), pVertexBufferObject);
 		attachChild(resultSprite2);
+		resultSprite2.setBlendFunction(GLES20.GL_ONE, GLES20.GL_ONE);
 
 		offscreenEntity.registerEntityModifier(new LoopEntityModifier(new RotationModifier(5, 0, 360)));
 		resultSprite2.registerEntityModifier(new LoopEntityModifier(new SequenceEntityModifier(

@@ -22,7 +22,7 @@ public class MainScene extends Scene{
 	// ===========================================================
 
 	private Rocket mRocket;
-	private RenderTexture mRT;
+	private RenderTexture mRenderTexture;
 
 	// ===========================================================
 	// Constructors
@@ -40,19 +40,48 @@ public class MainScene extends Scene{
 			}
 		});
 	
-		mRT = pTexturesLibrary.getRenderTexture();
-		Sprite dummy = new Sprite(mRT.getWidth()/2, mRT.getHeight()/2, pTexturesLibrary.getSun(), pVertexBufferObject) {
+		mRenderTexture = pTexturesLibrary.getRenderTexture();
+		Sprite dummy = new Sprite(mRenderTexture.getWidth()/2, mRenderTexture.getHeight()/2, pTexturesLibrary.getSun(), pVertexBufferObject) {
+			
+//			@Override
+//			protected void preDraw(GLState pGLState, Camera pCamera) {
+//				// TODO Auto-generated method stub
+//				if (!mRenderTexture.isInitialized()) {
+//					mRenderTexture.init(pGLState);
+//				}
+//				super.preDraw(pGLState, pCamera);
+//				mRenderTexture.begin(pGLState, Color.TRANSPARENT);
+//			}
+
+//			@Override
+//			protected void draw(GLState pGLState, Camera pCamera) {
+//				if (!mRenderTexture.isInitialized()) {
+//					mRenderTexture.init(pGLState);
+//				}
+//				mRenderTexture.begin(pGLState, Color.TRANSPARENT);
+//				{
+//					super.draw(pGLState, pCamera);
+//				}
+//				mRenderTexture.end(pGLState);
+//			}
+
 			@Override
-			protected void draw(GLState pGLState, Camera pCamera) {
-				if (!mRT.isInitialized()) {
-					mRT.init(pGLState);
+			protected void onManagedDraw(GLState pGLState, Camera pCamera) {
+				if (!mRenderTexture.isInitialized()) {
+					mRenderTexture.init(pGLState);
 				}
-				mRT.begin(pGLState, Color.TRANSPARENT);
-				{
-					super.draw(pGLState, pCamera);
-				}
-				mRT.end(pGLState);
+				mRenderTexture.begin(pGLState, Color.BLACK);
+				super.onManagedDraw(pGLState, pCamera);
+				mRenderTexture.end(pGLState);
 			}
+
+//			@Override
+//			protected void postDraw(GLState pGLState, Camera pCamera) {
+//				super.postDraw(pGLState, pCamera);
+//				mRenderTexture.end(pGLState);
+//				// TODO Auto-generated method stub
+//			}
+
 		};
 		Sprite child1 = new Sprite(0, 0, pTexturesLibrary.getSun(), pVertexBufferObject);
 		Sprite child2 = new Sprite(200, 200, pTexturesLibrary.getSun(), pVertexBufferObject);
@@ -60,7 +89,10 @@ public class MainScene extends Scene{
 		dummy.attachChild(child2);
 		attachChild(dummy);
 
-		Sprite resultSprite = new Sprite(200, 200, TextureRegionFactory.extractFromTexture(mRT), pVertexBufferObject);
+		Sprite pattern = new Sprite(500, 200, pTexturesLibrary.getSun(), pVertexBufferObject);
+		attachChild(pattern);
+
+		Sprite resultSprite = new Sprite(200, 200, TextureRegionFactory.extractFromTexture(mRenderTexture), pVertexBufferObject);
 		attachChild(resultSprite);
 	}
 	// ===========================================================

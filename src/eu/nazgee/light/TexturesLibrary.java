@@ -111,7 +111,7 @@ public class TexturesLibrary {
 				Color.WHITE.getARGBPackedInt());
 		mFont.load();
 
-		mRenderTexture = new RenderTexture(e.getTextureManager(), Globals.CAMERA_WIDTH, Globals.CAMERA_HEIGHT);
+		mRenderTexture = new RenderTexture(e.getTextureManager(), Globals.CAMERA_WIDTH/3, Globals.CAMERA_HEIGHT/3);
 	}
 
 	public void unload() {

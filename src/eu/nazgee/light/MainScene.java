@@ -3,15 +3,12 @@ package eu.nazgee.light;
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.modifier.LoopEntityModifier;
 import org.andengine.entity.modifier.MoveByModifier;
-import org.andengine.entity.modifier.MoveXModifier;
 import org.andengine.entity.modifier.RotationModifier;
 import org.andengine.entity.modifier.SequenceEntityModifier;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.sprite.Sprite;
-import org.andengine.entity.sprite.UncoloredSprite;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.TextureRegionFactory;
 import org.andengine.opengl.texture.render.RenderTexture;
@@ -27,17 +24,14 @@ public class MainScene extends Scene{
 	// ===========================================================
 	// Fields
 	// ===========================================================
-
 	private Rocket mRocket;
 	private RenderTexture mRenderTexture;
-	private final Camera mCamera;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 	public MainScene(TexturesLibrary pTexturesLibrary, Camera pCamera, VertexBufferObjectManager pVertexBufferObject) {
 		super();
-		mCamera = pCamera;
 		mRenderTexture = pTexturesLibrary.getRenderTexture();
 	
 		// Prepare Sprite hierarchy that will be renderred offscreen to the Texture
@@ -55,20 +49,15 @@ public class MainScene extends Scene{
 				}
 			}
 		};
-		Sprite offscreenPlanet1 = new Sprite(0, 0, pTexturesLibrary.getPlanet(0), pVertexBufferObject);
-		Sprite offscreenPlanet2 = new Sprite(200, 200, pTexturesLibrary.getPlanet(1), pVertexBufferObject);
-		offscreenSun.attachChild(offscreenPlanet1);
-		offscreenSun.attachChild(offscreenPlanet2);
+		attachReferencePlanets(offscreenSun, pTexturesLibrary, pVertexBufferObject);
 		attachChild(offscreenSun);
+
+		// Prepare sprite which will display offscreen-generated hierarchy
 		Sprite resultSprite = new Sprite(200, 200, TextureRegionFactory.extractFromTexture(mRenderTexture), pVertexBufferObject);
 		attachChild(resultSprite);
 
-		// Prepare Reference Sprite hierarchy, rendered in a traditional way 
-		Sprite referenceSun = new Sprite(500, 200, pTexturesLibrary.getSun(), pVertexBufferObject);
-		Sprite referencePlanet1 = new Sprite(0, 0, pTexturesLibrary.getPlanet(0), pVertexBufferObject);
-		Sprite referencePlanet2 = new Sprite(200, 200, pTexturesLibrary.getPlanet(1), pVertexBufferObject);
-		referenceSun.attachChild(referencePlanet1);
-		referenceSun.attachChild(referencePlanet2);
+		// Prepare reference Sprite hierarchy, rendered in a traditional way 
+		Sprite referenceSun = populateReferenceHierarchy(pTexturesLibrary, pVertexBufferObject);
 		attachChild(referenceSun);
 
 		referenceSun.registerEntityModifier(new LoopEntityModifier(new RotationModifier(25, 0, 360)));
@@ -101,6 +90,18 @@ public class MainScene extends Scene{
 	// ===========================================================
 	// Getter & Setter
 	// ===========================================================
+
+	private Sprite populateReferenceHierarchy(TexturesLibrary pTexturesLibrary, VertexBufferObjectManager pVertexBufferObject) {
+		Sprite referenceSun = new Sprite(500, 200, pTexturesLibrary.getSun(), pVertexBufferObject);
+		attachReferencePlanets(referenceSun, pTexturesLibrary, pVertexBufferObject);
+		return referenceSun;
+	}
+	private void attachReferencePlanets(Sprite referenceSun, TexturesLibrary pTexturesLibrary, VertexBufferObjectManager pVertexBufferObject) {
+		Sprite planet1 = new Sprite(0, 0, pTexturesLibrary.getPlanet(0), pVertexBufferObject);
+		Sprite planet2 = new Sprite(200, 200, pTexturesLibrary.getPlanet(1), pVertexBufferObject);
+		referenceSun.attachChild(planet1);
+		referenceSun.attachChild(planet2);
+	}
 
 	// ===========================================================
 	// Methods for/from SuperClass/Interfaces

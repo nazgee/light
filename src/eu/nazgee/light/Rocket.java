@@ -36,7 +36,7 @@ public class Rocket extends Sprite {
 	// ===========================================================
 	/**
 	 * Move the rocket to a given location. To increase realism, rocket will
-	 * move a little bit forward at first.
+	 * move a little bit forward at first (bezzier overshot).
 	 * 
 	 * @param pX
 	 * @param pY

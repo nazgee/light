@@ -16,6 +16,7 @@ import org.andengine.opengl.util.GLState;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.adt.color.Color;
 
+import eu.nazgee.utils.OffscreenEntity;
 import eu.nazgee.utils.OffscreenSprite;
 
 public class MainScene extends Scene{
@@ -41,6 +42,12 @@ public class MainScene extends Scene{
 		attachReferencePlanets(referenceHierarchy, pTexturesLibrary, pVertexBufferObject);
 		attachChild(referenceHierarchy);
 
+		referenceHierarchy.registerEntityModifier(new LoopEntityModifier(new RotationModifier(25, 0, 360)));
+		referenceHierarchy.registerEntityModifier(new LoopEntityModifier(new SequenceEntityModifier(
+				new MoveByModifier(5, 100, 0),
+				new MoveByModifier(5, -100, 0)
+				)));
+
 		// Prepare offscreen Sprite
 		OffscreenSprite offscreen = new OffscreenSprite(mRenderTexture.getWidth()/2, mRenderTexture.getHeight()/2, mRenderTexture, pTexturesLibrary.getSun(), pVertexBufferObject);
 		attachReferencePlanets(offscreen, pTexturesLibrary, pVertexBufferObject);
@@ -50,14 +57,25 @@ public class MainScene extends Scene{
 		Sprite resultSprite = new Sprite(200, 200, TextureRegionFactory.extractFromTexture(mRenderTexture), pVertexBufferObject);
 		attachChild(resultSprite);
 
-		referenceHierarchy.registerEntityModifier(new LoopEntityModifier(new RotationModifier(25, 0, 360)));
-		referenceHierarchy.registerEntityModifier(new LoopEntityModifier(new SequenceEntityModifier(
+		offscreen.registerEntityModifier(new LoopEntityModifier(new RotationModifier(25, 0, 360)));
+		resultSprite.registerEntityModifier(new LoopEntityModifier(new SequenceEntityModifier(
 				new MoveByModifier(5, 100, 0),
 				new MoveByModifier(5, -100, 0)
 				)));
 
-		offscreen.registerEntityModifier(new LoopEntityModifier(new RotationModifier(25, 0, 360)));
-		resultSprite.registerEntityModifier(new LoopEntityModifier(new SequenceEntityModifier(
+		// Prepare offscreen Entity
+		OffscreenEntity offscreenEntity = new OffscreenEntity(mRenderTexture.getWidth()/2, mRenderTexture.getHeight()/2, mRenderTexture);
+		Sprite offscrenSun = new Sprite(0, 0, pTexturesLibrary.getSun(), pVertexBufferObject);
+		attachReferencePlanets(offscrenSun, pTexturesLibrary, pVertexBufferObject);
+		offscreenEntity.attachChild(offscrenSun);
+		attachChild(offscreenEntity);
+
+		// Prepare sprite which will display offscreen-generated stuff
+		Sprite resultSprite2 = new Sprite(400, 300, TextureRegionFactory.extractFromTexture(mRenderTexture), pVertexBufferObject);
+		attachChild(resultSprite2);
+
+		offscreenEntity.registerEntityModifier(new LoopEntityModifier(new RotationModifier(5, 0, 360)));
+		resultSprite2.registerEntityModifier(new LoopEntityModifier(new SequenceEntityModifier(
 				new MoveByModifier(5, 100, 0),
 				new MoveByModifier(5, -100, 0)
 				)));

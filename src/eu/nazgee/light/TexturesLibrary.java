@@ -4,10 +4,12 @@ import org.andengine.engine.Engine;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.font.FontManager;
+import org.andengine.opengl.texture.PixelFormat;
 import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.render.RenderTexture;
 import org.andengine.util.adt.color.Color;
 import org.andengine.util.debug.Debug;
@@ -22,7 +24,8 @@ public class TexturesLibrary {
 	// ===========================================================
 	// Constants
 	// ===========================================================
-
+	private static final int TEXTURE_FIRST_PLANET = TextureMain.PROPS_SURFACE_01_ID;
+	private static final int TEXTURE_COUNT_PLANET = 3;
 	// ===========================================================
 	// Fields
 	// ===========================================================
@@ -56,6 +59,14 @@ public class TexturesLibrary {
 
 	public TexturePackTextureRegion getSun() {
 		return mSpritesheetMain.getTexturePackTextureRegionLibrary().get(TextureMain.PROPS_SUN_ID);
+	}
+
+	public TexturePackTextureRegion getPlanet(int mPlanetNumber) {
+		return mSpritesheetMain.getTexturePackTextureRegionLibrary().get(TEXTURE_FIRST_PLANET + moduloBounds(mPlanetNumber, TEXTURE_COUNT_PLANET));
+	}
+
+	public ITextureRegion getBackground() {
+		return mSpritesheetMain.getTexturePackTextureRegionLibrary().get(TextureMain.BG_BG_ID);
 	}
 //
 //	public ITiledTextureRegion getPropTeleport() {
@@ -111,7 +122,7 @@ public class TexturesLibrary {
 				Color.WHITE.getARGBPackedInt());
 		mFont.load();
 
-		mRenderTexture = new RenderTexture(e.getTextureManager(), Globals.CAMERA_WIDTH/3, Globals.CAMERA_HEIGHT/3);
+		mRenderTexture = new RenderTexture(e.getTextureManager(), 300, 300, PixelFormat.RGBA_8888, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 	}
 
 	public void unload() {

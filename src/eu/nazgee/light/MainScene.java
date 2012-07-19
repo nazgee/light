@@ -1,8 +1,15 @@
 package eu.nazgee.light;
 
 import org.andengine.engine.camera.Camera;
+import org.andengine.entity.modifier.LoopEntityModifier;
+import org.andengine.entity.modifier.MoveByModifier;
+import org.andengine.entity.modifier.MoveXModifier;
+import org.andengine.entity.modifier.RotationModifier;
+import org.andengine.entity.modifier.SequenceEntityModifier;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.sprite.UncoloredSprite;
 import org.andengine.input.touch.TouchEvent;
@@ -23,12 +30,63 @@ public class MainScene extends Scene{
 
 	private Rocket mRocket;
 	private RenderTexture mRenderTexture;
+	private final Camera mCamera;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
-	public MainScene(TexturesLibrary pTexturesLibrary, VertexBufferObjectManager pVertexBufferObject) {
+	public MainScene(TexturesLibrary pTexturesLibrary, Camera pCamera, VertexBufferObjectManager pVertexBufferObject) {
 		super();
+		mCamera = pCamera;
+		mRenderTexture = pTexturesLibrary.getRenderTexture();
+	
+		// Prepare Sprite hierarchy that will be renderred offscreen to the Texture
+		Sprite offscreenSun = new Sprite(mRenderTexture.getWidth()/2, mRenderTexture.getHeight()/2, pTexturesLibrary.getSun(), pVertexBufferObject) {
+			@Override
+			protected void onManagedDraw(GLState pGLState, Camera pCamera) {
+				if (!mRenderTexture.isInitialized()) {
+					mRenderTexture.init(pGLState);
+				}
+
+				{
+					mRenderTexture.begin(pGLState, false, true, Color.TRANSPARENT);
+					super.onManagedDraw(pGLState, pCamera);
+					mRenderTexture.end(pGLState);
+				}
+			}
+		};
+		Sprite offscreenPlanet1 = new Sprite(0, 0, pTexturesLibrary.getPlanet(0), pVertexBufferObject);
+		Sprite offscreenPlanet2 = new Sprite(200, 200, pTexturesLibrary.getPlanet(1), pVertexBufferObject);
+		offscreenSun.attachChild(offscreenPlanet1);
+		offscreenSun.attachChild(offscreenPlanet2);
+		attachChild(offscreenSun);
+		Sprite resultSprite = new Sprite(200, 200, TextureRegionFactory.extractFromTexture(mRenderTexture), pVertexBufferObject);
+		attachChild(resultSprite);
+
+		// Prepare Reference Sprite hierarchy, rendered in a traditional way 
+		Sprite referenceSun = new Sprite(500, 200, pTexturesLibrary.getSun(), pVertexBufferObject);
+		Sprite referencePlanet1 = new Sprite(0, 0, pTexturesLibrary.getPlanet(0), pVertexBufferObject);
+		Sprite referencePlanet2 = new Sprite(200, 200, pTexturesLibrary.getPlanet(1), pVertexBufferObject);
+		referenceSun.attachChild(referencePlanet1);
+		referenceSun.attachChild(referencePlanet2);
+		attachChild(referenceSun);
+
+		referenceSun.registerEntityModifier(new LoopEntityModifier(new RotationModifier(25, 0, 360)));
+		referenceSun.registerEntityModifier(new LoopEntityModifier(new SequenceEntityModifier(
+				new MoveByModifier(5, 100, 0),
+				new MoveByModifier(5, -100, 0)
+				)));
+
+		offscreenSun.registerEntityModifier(new LoopEntityModifier(new RotationModifier(25, 0, 360)));
+		resultSprite.registerEntityModifier(new LoopEntityModifier(new SequenceEntityModifier(
+				new MoveByModifier(5, 100, 0),
+				new MoveByModifier(5, -100, 0)
+				)));
+
+		// prepare Backgroung
+		setBackground(new SpriteBackground(new Sprite(pCamera.getWidth()/2, pCamera.getHeight()/2, pCamera.getWidth(), pCamera.getHeight(), pTexturesLibrary.getBackground(), pVertexBufferObject)));
+
+		// prepare a Rocket
 		mRocket = new Rocket(100, 100, pTexturesLibrary.getRocket(), pVertexBufferObject);
 		attachChild(mRocket);
 
@@ -39,61 +97,6 @@ public class MainScene extends Scene{
 				return true;
 			}
 		});
-	
-		mRenderTexture = pTexturesLibrary.getRenderTexture();
-		Sprite dummy = new Sprite(mRenderTexture.getWidth()/2, mRenderTexture.getHeight()/2, pTexturesLibrary.getSun(), pVertexBufferObject) {
-			
-//			@Override
-//			protected void preDraw(GLState pGLState, Camera pCamera) {
-//				// TODO Auto-generated method stub
-//				if (!mRenderTexture.isInitialized()) {
-//					mRenderTexture.init(pGLState);
-//				}
-//				super.preDraw(pGLState, pCamera);
-//				mRenderTexture.begin(pGLState, Color.TRANSPARENT);
-//			}
-
-//			@Override
-//			protected void draw(GLState pGLState, Camera pCamera) {
-//				if (!mRenderTexture.isInitialized()) {
-//					mRenderTexture.init(pGLState);
-//				}
-//				mRenderTexture.begin(pGLState, Color.TRANSPARENT);
-//				{
-//					super.draw(pGLState, pCamera);
-//				}
-//				mRenderTexture.end(pGLState);
-//			}
-
-			@Override
-			protected void onManagedDraw(GLState pGLState, Camera pCamera) {
-				if (!mRenderTexture.isInitialized()) {
-					mRenderTexture.init(pGLState);
-				}
-				mRenderTexture.begin(pGLState, Color.BLACK);
-				super.onManagedDraw(pGLState, pCamera);
-				mRenderTexture.end(pGLState);
-			}
-
-//			@Override
-//			protected void postDraw(GLState pGLState, Camera pCamera) {
-//				super.postDraw(pGLState, pCamera);
-//				mRenderTexture.end(pGLState);
-//				// TODO Auto-generated method stub
-//			}
-
-		};
-		Sprite child1 = new Sprite(0, 0, pTexturesLibrary.getSun(), pVertexBufferObject);
-		Sprite child2 = new Sprite(200, 200, pTexturesLibrary.getSun(), pVertexBufferObject);
-		dummy.attachChild(child1);
-		dummy.attachChild(child2);
-		attachChild(dummy);
-
-		Sprite pattern = new Sprite(500, 200, pTexturesLibrary.getSun(), pVertexBufferObject);
-		attachChild(pattern);
-
-		Sprite resultSprite = new Sprite(200, 200, TextureRegionFactory.extractFromTexture(mRenderTexture), pVertexBufferObject);
-		attachChild(resultSprite);
 	}
 	// ===========================================================
 	// Getter & Setter

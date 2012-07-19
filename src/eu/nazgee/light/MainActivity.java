@@ -36,7 +36,7 @@ public class MainActivity extends BaseGameActivity {
 		final Camera camera = new Camera(0, 0, Globals.CAMERA_WIDTH, Globals.CAMERA_HEIGHT);
 		BaseResolutionPolicy resolutionPolicy = new RatioResolutionPolicy((int) camera.getWidth(), (int) camera.getHeight());
 
-		return new EngineOptions(true, ScreenOrientation.LANDSCAPE_SENSOR, resolutionPolicy, camera);
+		return new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, resolutionPolicy, camera);
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class MainActivity extends BaseGameActivity {
 	@Override
 	public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) throws IOException {
 		// TODO Auto-generated method stub
-		MainScene scene = new MainScene(mTexturesLibrary, getVertexBufferObjectManager());
+		MainScene scene = new MainScene(mTexturesLibrary, getEngine().getCamera(), getVertexBufferObjectManager());
 
 		// push the Engine forward
 		pOnCreateSceneCallback.onCreateSceneFinished(scene);

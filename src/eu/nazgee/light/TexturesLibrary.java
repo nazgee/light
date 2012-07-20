@@ -42,7 +42,6 @@ public class TexturesLibrary {
 	private final Context mContext;
 	private TexturePack mSpritesheetMain;
 	private RenderTexture mRenderTextureARGB8888;
-	private RenderTexture mRenderTextureI8;
 	private BuildableBitmapTextureAtlas mBuildableBitmapTextureAtlasARGB8888;
 	private BuildableBitmapTextureAtlas mBuildableBitmapTextureAtlasI8;
 	private TextureRegion mBoxFaceTextureRegion;
@@ -68,10 +67,6 @@ public class TexturesLibrary {
 
 	public RenderTexture getRenderTextureARGB8888() {
 		return mRenderTextureARGB8888;
-	}
-
-	public RenderTexture getRenderTextureI8() {
-		return mRenderTextureI8;
 	}
 
 	public TexturePackTextureRegion getRocket() {
@@ -168,7 +163,6 @@ public class TexturesLibrary {
 
 		// Prepare render textures
 		mRenderTextureARGB8888 = new RenderTexture(e.getTextureManager(), 300, 300, PixelFormat.RGBA_8888, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-		mRenderTextureI8 = new RenderTexture(e.getTextureManager(), 300, 300, PixelFormat.I_8, TextureOptions.BILINEAR);
 	}
 
 	public void unload() {

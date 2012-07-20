@@ -162,7 +162,7 @@ public class TexturesLibrary {
 		mFont.load();
 
 		// Prepare render textures
-		mRenderTextureARGB8888 = new RenderTexture(e.getTextureManager(), 300, 300, PixelFormat.RGBA_8888, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		mRenderTextureARGB8888 = new RenderTexture(e.getTextureManager(), 256, 128, PixelFormat.RGBA_8888, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 	}
 
 	public void unload() {

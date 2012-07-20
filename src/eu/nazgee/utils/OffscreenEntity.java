@@ -21,7 +21,11 @@ public class OffscreenEntity extends Entity {
 	// ===========================================================
 
 	public OffscreenEntity(float pX, float pY, final RenderTexture pRenderTexture) {
-		super(pX, pY);
+		this(pX, pY, 0, 0, pRenderTexture);
+	}
+
+	public OffscreenEntity(float pX, float pY, final float pWidth, final float pHeight, final RenderTexture pRenderTexture) {
+		super(pX, pY, pWidth, pHeight);
 		this.mRenderTexture = pRenderTexture;
 		this.mClearColor = DEFAULT_CLEAR_COLOR;
 	}
@@ -42,9 +46,15 @@ public class OffscreenEntity extends Entity {
 		}
 
 		{
+//			pGLState.pushProjectionGLMatrix();
+//			pGLState.pushModelViewGLMatrix();
 			mRenderTexture.begin(pGLState, false, true, mClearColor);
+//			pGLState.orthoProjectionGLMatrixf(0, getWidth(), 0, getHeight(), -1, 1);
+//			pGLState.orthoModelViewGLMatrixf(0, getWidth(), 0, getHeight(), -1, 1);
 			super.onManagedDraw(pGLState, pCamera);
 			mRenderTexture.end(pGLState);
+//			pGLState.popModelViewGLMatrix();
+//			pGLState.popProjectionGLMatrix();
 		}
 	}
 	// ===========================================================

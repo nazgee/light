@@ -9,7 +9,12 @@ import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSource;
+import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
+import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.texture.render.RenderTexture;
 import org.andengine.util.adt.color.Color;
 import org.andengine.util.debug.Debug;
@@ -36,7 +41,12 @@ public class TexturesLibrary {
 	// have always loaded
 	private final Context mContext;
 	private TexturePack mSpritesheetMain;
-	private RenderTexture mRenderTexture;
+	private RenderTexture mRenderTextureARGB8888;
+	private RenderTexture mRenderTextureI8;
+	private BuildableBitmapTextureAtlas mBuildableBitmapTextureAtlasARGB8888;
+	private BuildableBitmapTextureAtlas mBuildableBitmapTextureAtlasI8;
+	private TextureRegion mBoxFaceTextureRegion;
+	private TextureRegion mLightRay;
 
 	// ===========================================================
 	// Constructors
@@ -48,9 +58,20 @@ public class TexturesLibrary {
 	// ===========================================================
 	// Getter & Setter
 	// ===========================================================
+	public ITextureRegion getLightRay() {
+		return mLightRay;
+	}
 
-	public RenderTexture getRenderTexture() {
-		return mRenderTexture;
+	public ITextureRegion getBoxFace() {
+		return mBoxFaceTextureRegion;
+	}
+
+	public RenderTexture getRenderTextureARGB8888() {
+		return mRenderTextureARGB8888;
+	}
+
+	public RenderTexture getRenderTextureI8() {
+		return mRenderTextureI8;
 	}
 
 	public TexturePackTextureRegion getRocket() {
@@ -113,6 +134,29 @@ public class TexturesLibrary {
 			Debug.e(ex);
 		}
 
+		// Load ARGB8888 textures
+		this.mBuildableBitmapTextureAtlasARGB8888 = new BuildableBitmapTextureAtlas(e.getTextureManager(), 512, 512, TextureOptions.BILINEAR);
+		this.mBoxFaceTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mBuildableBitmapTextureAtlasARGB8888, c, "face_box.png");
+//		this.mLightRay = BitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mBuildableBitmapTextureAtlasARGB8888, c, "light.png");
+
+		try {
+			this.mBuildableBitmapTextureAtlasARGB8888.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
+			this.mBuildableBitmapTextureAtlasARGB8888.load();
+		} catch (TextureAtlasBuilderException ex) {
+			Debug.e(ex);
+		}
+
+		// Load I8  textures
+		this.mBuildableBitmapTextureAtlasI8 = new BuildableBitmapTextureAtlas(e.getTextureManager(), 512, 512, TextureOptions.BILINEAR);
+		this.mLightRay = BitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mBuildableBitmapTextureAtlasI8, c, "light.png");
+
+		try {
+			this.mBuildableBitmapTextureAtlasI8.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
+			this.mBuildableBitmapTextureAtlasI8.load();
+		} catch (TextureAtlasBuilderException ex) {
+			Debug.e(ex);
+		}
+
 		// Load fonts
 		final TextureManager textureManager = e.getTextureManager();
 		final FontManager fontManager = e.getFontManager();
@@ -122,7 +166,9 @@ public class TexturesLibrary {
 				Color.WHITE.getARGBPackedInt());
 		mFont.load();
 
-		mRenderTexture = new RenderTexture(e.getTextureManager(), 300, 300, PixelFormat.RGBA_8888, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		// Prepare render textures
+		mRenderTextureARGB8888 = new RenderTexture(e.getTextureManager(), 300, 300, PixelFormat.RGBA_8888, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		mRenderTextureI8 = new RenderTexture(e.getTextureManager(), 300, 300, PixelFormat.I_8, TextureOptions.BILINEAR);
 	}
 
 	public void unload() {

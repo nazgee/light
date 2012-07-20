@@ -18,7 +18,7 @@ import org.andengine.util.modifier.ease.EaseStrongInOut;
 import org.andengine.util.modifier.ease.EaseStrongOut;
 
 import android.opengl.GLES20;
-import eu.nazgee.utils.OffscreenEntity;
+import eu.nazgee.utils.OffscreenFramebuffer;
 import eu.nazgee.utils.OffscreenSprite;
 
 public class MainScene extends Scene{
@@ -50,17 +50,17 @@ public class MainScene extends Scene{
 				new MoveByModifier(5, -100, 0)
 				)));
 
-		OffscreenEntity offscreenShadow = new OffscreenEntity(mRenderTexture.getWidth()/2, mRenderTexture.getHeight()/2, mRenderTexture);
-		Sprite lightray = new Sprite(0,0, pTexturesLibrary.getLightRay(), pVertexBufferObject);
+		OffscreenFramebuffer framebuffer = new OffscreenFramebuffer(pCamera.getWidth(), pCamera.getHeight(), mRenderTexture);
+		attachChild(framebuffer);
+		Sprite lightray = new Sprite(pCamera.getWidth()/2, pCamera.getHeight()/2, pTexturesLibrary.getLightRay(), pVertexBufferObject);
 		lightray.setRotationCenter(1, 0.5f);
 		lightray.registerEntityModifier(new LoopEntityModifier(
 				new SequenceEntityModifier(
 						new RotationModifier(0.5f, 0, -15, EaseStrongOut.getInstance()),
 						new RotationModifier(1, -15, 15, EaseStrongInOut.getInstance()),
 						new RotationModifier(0.5f, 15, 0, EaseStrongIn.getInstance()))));
-		offscreenShadow.attachChild(lightray);
-		attachChild(offscreenShadow);
-		Sprite shadow = new Sprite(200, 200, TextureRegionFactory.extractFromTexture(mRenderTexture), pVertexBufferObject);
+		framebuffer.attachChild(lightray);
+		Sprite shadow = new Sprite(200, 200, 200, 100, TextureRegionFactory.extractFromTexture(mRenderTexture), pVertexBufferObject);
 		attachChild(shadow);
 		shadow.setBlendFunction(GLES20.GL_DST_COLOR, GLES20.GL_ZERO);
 

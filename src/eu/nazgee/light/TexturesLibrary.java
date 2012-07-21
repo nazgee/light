@@ -61,6 +61,10 @@ public class TexturesLibrary {
 		return mLightRay;
 	}
 
+	public ITextureRegion getLightShockwave() {
+		return mSpritesheetMain.getTexturePackTextureRegionLibrary().get(TextureMain.LIGHT_SHOCKWAVE_ID);
+	}
+
 	public ITextureRegion getBoxFace() {
 		return mBoxFaceTextureRegion;
 	}

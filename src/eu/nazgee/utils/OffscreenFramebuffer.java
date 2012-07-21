@@ -8,11 +8,17 @@ import org.andengine.opengl.texture.render.RenderTexture;
 import org.andengine.opengl.util.GLState;
 import org.andengine.util.adt.color.Color;
 
+/**
+ * (c) 2012 Michal Stawinski
+ * 
+ * @author Michal Stawinski (nazgee)
+ * @since 14:25:02 - 21.07.2012
+ */
 public class OffscreenFramebuffer extends Entity {
 	// ===========================================================
 	// Constants
 	// ===========================================================
-	private static final Color DEFAULT_CLEAR_COLOR = Color.TRANSPARENT;
+
 	// ===========================================================
 	// Fields
 	// ===========================================================
@@ -23,7 +29,7 @@ public class OffscreenFramebuffer extends Entity {
 	// ===========================================================
 
 	public OffscreenFramebuffer(final float pWidth, final float pHeight, final RenderTexture pRenderTexture) {
-		this(pWidth, pHeight, pRenderTexture, DEFAULT_CLEAR_COLOR);
+		this(pWidth, pHeight, pRenderTexture, null);
 	}
 
 	public OffscreenFramebuffer(final float pWidth, final float pHeight, final RenderTexture pRenderTexture, final Color pClearColor) {
@@ -36,30 +42,35 @@ public class OffscreenFramebuffer extends Entity {
 	// Getter & Setter
 	// ===========================================================
 	public ITextureRegion getTextureRegion() {
-		return TextureRegionFactory.extractFromTexture(mRenderTexture);
+		return TextureRegionFactory.extractFromTexture(this.mRenderTexture);
 	}
 	// ===========================================================
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
 
 	@Override
-	protected void onManagedDraw(GLState pGLState, Camera pCamera) {
-		if (!mRenderTexture.isInitialized()) {
-			mRenderTexture.init(pGLState);
+	public void onManagedDraw(GLState pGLState, Camera pCamera) {
+		if (!this.mRenderTexture.isInitialized()) {
+			this.mRenderTexture.init(pGLState);
 		}
 
 		{
-			mRenderTexture.begin(pGLState, false, true, mClearColor);
+			if (mClearColor != null) {
+				mRenderTexture.begin(pGLState, false, true, this.mClearColor);
+			} else {
+				this.mRenderTexture.begin(pGLState, false, true);
+			}
 
-			final float scaleX = mRenderTexture.getWidth()/getWidth();
-			final float scaleY = mRenderTexture.getHeight()/getHeight();
+			final float scaleX = this.mRenderTexture.getWidth()/getWidth();
+			final float scaleY = this.mRenderTexture.getHeight()/getHeight();
 			pGLState.scaleProjectionGLMatrixf(scaleX, scaleY, 1);
 
 			super.onManagedDraw(pGLState, pCamera);
 
-			mRenderTexture.end(pGLState);
+			this.mRenderTexture.end(pGLState);
 		}
 	}
+
 	// ===========================================================
 	// Methods
 	// ===========================================================

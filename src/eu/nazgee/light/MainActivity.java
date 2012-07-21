@@ -8,6 +8,7 @@ import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.BaseResolutionPolicy;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.util.FPSLogger;
 import org.andengine.ui.activity.BaseGameActivity;
 
 public class MainActivity extends BaseGameActivity {
@@ -55,6 +56,7 @@ public class MainActivity extends BaseGameActivity {
 
 		// push the Engine forward
 		pOnCreateSceneCallback.onCreateSceneFinished(scene);
+		getEngine().registerUpdateHandler(new FPSLogger(1));
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package eu.nazgee.utils;
 
 import org.andengine.entity.IEntity;
 import org.andengine.util.Constants;
-import org.andengine.util.adt.transformation.Transformation;
 
 public class SimpleTracker extends BaseTracker {
 	// ===========================================================
@@ -33,9 +32,9 @@ public class SimpleTracker extends BaseTracker {
 	public void onUpdate(float pSecondsElapsed) {
 		// simple move around (no rotation)
 		mEntityToFollow.getSceneCenterCoordinates(mPosReuse1);
+
 		mEntityToMove.getParent().convertSceneCoordinatesToLocalCoordinates(mPosReuse1, mPosReuse2);
 		mEntityToMove.setPosition(mPosReuse2[Constants.VERTEX_INDEX_X], mPosReuse2[Constants.VERTEX_INDEX_Y]);
-
 		mEntityToMove.setRotation(mEntityToFollow.getRotation() + 90);
 	}
 

@@ -27,6 +27,7 @@ import org.andengine.util.modifier.ease.EaseStrongInOut;
 import org.andengine.util.modifier.ease.EaseStrongOut;
 
 import android.opengl.GLES20;
+import eu.nazgee.props.Rocket;
 import eu.nazgee.utils.OffscreenFramebuffer;
 import eu.nazgee.utils.SimpleTracker;
 
@@ -76,7 +77,7 @@ public class MainScene extends Scene{
 		// ==== Prepare shadow 
 		Sprite shadow = populateShadow(pTexturesLibrary, pCamera, pVertexBufferObject);
 		attachChild(mFramebuffer);
-		attachChild(shadow);
+//		attachChild(shadow);
 
 		SimpleTracker tracker = new SimpleTracker(mTorch, mRocket);
 		registerUpdateHandler(tracker);

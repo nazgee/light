@@ -1,5 +1,6 @@
-package eu.nazgee.light;
+package eu.nazgee.props;
 
+import org.andengine.engine.handler.runnable.RunnableHandler;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
@@ -19,6 +20,7 @@ public class Rocket extends Sprite {
 	// Fields
 	// ===========================================================
 	final IMoveTo mMoveTo;
+	RunnableHandler mRunnableHandler = new RunnableHandler();
 	// ===========================================================
 	// Constructors
 	// ===========================================================
@@ -26,9 +28,10 @@ public class Rocket extends Sprite {
 			final VertexBufferObjectManager pVertexBufferObjectManager) {
 		super(pX, pY, pTextureRegion, pVertexBufferObjectManager);
 
-		mMoveTo = new BezzierMoveTo(this, new BezzierMoveTo.MovementParam(eConstraintType.VELOCITY, 200, 100));
+		mMoveTo = new BezzierMoveTo(this, new BezzierMoveTo.MovementParam(eConstraintType.VELOCITY, 200, 100), mRunnableHandler);
 
 		registerUpdateHandler(new HeadingToRotation(this));
+		registerUpdateHandler(mRunnableHandler);
 	}
 
 	// ===========================================================

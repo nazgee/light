@@ -1,8 +1,11 @@
 package eu.nazgee.utils;
 
+import org.andengine.engine.handler.runnable.RunnableHandler;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.QuadraticBezierCurveMoveModifier;
 import org.andengine.util.math.MathUtils;
+import org.andengine.util.modifier.IModifier;
+import org.andengine.util.modifier.IModifier.IModifierListener;
 
 import android.util.FloatMath;
 
@@ -11,8 +14,8 @@ public class BezzierMoveTo extends BaseMoveTo {
 	// ===========================================================
 	// Constants
 	// ===========================================================
-	public BezzierMoveTo(IEntity pEntity, MovementParam mMovementParam) {
-		super(new Animator(pEntity), mMovementParam);
+	public BezzierMoveTo(IEntity pEntity, MovementParam mMovementParam, final RunnableHandler pRunnableHandler) {
+		super(new Animator(pEntity), mMovementParam, pRunnableHandler);
 	}
 	// ===========================================================
 	// Fields
@@ -42,6 +45,16 @@ public class BezzierMoveTo extends BaseMoveTo {
 		final QuadraticBezierCurveMoveModifier bezzier = new QuadraticBezierCurveMoveModifier(time, startX, startY,
 				cnt1X, cnt1Y, endX, endY);
 
+		bezzier.addModifierListener(new IModifierListener<IEntity>() {
+			@Override
+			public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
+			}
+
+			@Override
+			public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
+				onDestination();
+			}
+		});
 		mAnimator.run(bezzier);
 		return time;
 	}

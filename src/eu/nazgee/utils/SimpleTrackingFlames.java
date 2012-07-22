@@ -1,9 +1,11 @@
 package eu.nazgee.utils;
 
 import org.andengine.entity.IEntity;
-import org.andengine.util.Constants;
+import org.andengine.entity.particle.emitter.BaseParticleEmitter;
 
-public class SimpleTracker extends BaseTracker {
+import eu.nazgee.props.BaseFlame;
+
+public class SimpleTrackingFlames extends SimpleTrackingParticles {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -21,8 +23,8 @@ public class SimpleTracker extends BaseTracker {
 	// Getter & Setter
 	// ===========================================================
 
-	public SimpleTracker(IEntity pEntityToMove, IEntity pEntityToFollow) {
-		super(pEntityToMove, pEntityToFollow);
+	public SimpleTrackingFlames(BaseFlame pParticlesToMover, IEntity pEntityToFollow) {
+		super(pParticlesToMover, pEntityToFollow);
 	}
 
 	// ===========================================================
@@ -30,12 +32,9 @@ public class SimpleTracker extends BaseTracker {
 	// ===========================================================
 	@Override
 	public void onUpdate(float pSecondsElapsed) {
-		// simple move around (no rotation)
-		mEntityToFollow.getSceneCenterCoordinates(mPosReuse1);
+		super.onUpdate(pSecondsElapsed);
 
-		mEntityToMove.getParent().convertSceneCoordinatesToLocalCoordinates(mPosReuse1, mPosReuse2);
-		mEntityToMove.setPosition(mPosReuse2[Constants.VERTEX_INDEX_X], mPosReuse2[Constants.VERTEX_INDEX_Y]);
-		mEntityToMove.setRotation(mEntityToFollow.getRotation() + 90);
+		mParticlesToMove.setRotation(mEntityToFollow.getRotation() + 90);
 	}
 
 	@Override

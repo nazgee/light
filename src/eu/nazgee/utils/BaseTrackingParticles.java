@@ -1,9 +1,11 @@
 package eu.nazgee.utils;
 
 import org.andengine.engine.handler.IUpdateHandler;
+import org.andengine.entity.Entity;
 import org.andengine.entity.IEntity;
+import org.andengine.entity.particle.ParticleSystem;
 
-public abstract class BaseTracker implements IUpdateHandler {
+public abstract class BaseTrackingParticles implements IUpdateHandler {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -11,24 +13,24 @@ public abstract class BaseTracker implements IUpdateHandler {
 	// ===========================================================
 	// Fields
 	// ===========================================================
-	protected IEntity mEntityToMove;
+	protected ParticleSystem<Entity> mParticlesToMove;
 	protected IEntity mEntityToFollow;
 	// ===========================================================
 	// Constructors
 	// ===========================================================
-	public BaseTracker(IEntity pEntityToMove, IEntity pEntityToFollow) {
-		this.mEntityToMove = pEntityToMove;
+	public BaseTrackingParticles(ParticleSystem<Entity> pParticlesToMove, IEntity pEntityToFollow) {
+		this.mParticlesToMove = pParticlesToMove;
 		this.setEntityToFollow(pEntityToFollow);
 	}
 	// ===========================================================
 	// Getter & Setter
 	// ===========================================================
 
-	public IEntity getEntityToMove() {
-		return mEntityToMove;
+	public ParticleSystem<Entity> getParticlesToMove() {
+		return mParticlesToMove;
 	}
-	public void setEntityToMove(IEntity mEntityToMove) {
-		this.mEntityToMove = mEntityToMove;
+	public void setParticlesToMove(ParticleSystem<Entity> pPatriclesToMove) {
+		this.mParticlesToMove = pPatriclesToMove;
 	}
 	public IEntity getEntityToFollow() {
 		return mEntityToFollow;

@@ -17,7 +17,6 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
-import org.andengine.opengl.texture.region.TextureRegionFactory;
 import org.andengine.opengl.texture.render.RenderTexture;
 import org.andengine.opengl.util.GLState;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
@@ -31,7 +30,7 @@ import eu.nazgee.props.Rocket;
 import eu.nazgee.props.RocketFlame;
 import eu.nazgee.props.RocketFlameLight;
 import eu.nazgee.utils.OffscreenFramebuffer;
-import eu.nazgee.utils.SimpleTracker;
+import eu.nazgee.utils.SimpleTracking;
 
 public class MainScene extends Scene{
 	// ===========================================================
@@ -85,7 +84,7 @@ public class MainScene extends Scene{
 		RocketFlameLight flameslight = new RocketFlameLight(mRocket, pTexturesLibrary.getLightFlames(), pVertexBufferObject);
 		mFramebuffer.attachChild(flameslight);
 
-		SimpleTracker tracker = new SimpleTracker(mTorch, mRocket);
+		SimpleTracking tracker = new SimpleTracking(mTorch, mRocket);
 		registerUpdateHandler(tracker);
 
 		// prepare Backgroung

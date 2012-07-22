@@ -84,8 +84,14 @@ public class MainScene extends Scene{
 		RocketFlameLight flameslight = new RocketFlameLight(mRocket, pTexturesLibrary.getLightFlames(), pVertexBufferObject);
 		mFramebuffer.attachChild(flameslight);
 
+
 		SimpleTracking tracker = new SimpleTracking(mTorch, mRocket);
 		registerUpdateHandler(tracker);
+
+		Sprite aura = new Sprite(0, 0, 100, 100, pTexturesLibrary.getLighAura(), pVertexBufferObject);
+		mFramebuffer.attachChild(aura);
+		SimpleTracking auratracker = new SimpleTracking(aura, mRocket);
+		registerUpdateHandler(auratracker);
 
 		// prepare Backgroung
 		setBackground(new SpriteBackground(new Sprite(pCamera.getWidth()/2, pCamera.getHeight()/2, pCamera.getWidth(), pCamera.getHeight(), pTexturesLibrary.getBackground(), pVertexBufferObject)));

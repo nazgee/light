@@ -61,6 +61,10 @@ public class TexturesLibrary {
 		return mLightRay;
 	}
 
+	public ITextureRegion getLighAura() {
+		return mSpritesheetMain.getTexturePackTextureRegionLibrary().get(TextureMain.LIGHT_RADIAL_WEAK_ID);
+	}
+
 	public ITextureRegion getLightShockwave() {
 		return mSpritesheetMain.getTexturePackTextureRegionLibrary().get(TextureMain.LIGHT_SHOCKWAVE_ID);
 	}

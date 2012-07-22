@@ -43,7 +43,7 @@ public class RocketFlame extends BatchedPseudoSpriteParticleSystem {
 		setBlendFunction(GLES20.GL_ONE, GLES20.GL_ONE);
 
 		final float initialScale = 1.3f;
-		addParticleInitializer(new ColorParticleInitializer<Entity>(1, 0, 0));
+		addParticleInitializer(new ColorParticleInitializer<Entity>(1, 0.9f, 0.1f));
 		addParticleInitializer(new ScaleParticleInitializer<Entity>(initialScale));
 		addParticleInitializer(new AlphaParticleInitializer<Entity>(0));
 		mVelocityParticleInitializer = new VelocityParticleInitializer<Entity>(-2, 2, 10, 20);
@@ -54,7 +54,8 @@ public class RocketFlame extends BatchedPseudoSpriteParticleSystem {
 
 		addParticleModifier(new ScaleParticleModifier<Entity>(1, 2, initialScale, 1f));
 		addParticleModifier(new ScaleParticleModifier<Entity>(2, 5, 1f, 2.0f));
-		addParticleModifier(new ColorParticleModifier<Entity>(0, 1.0f, 1, 1, 0, 0.5f, 0, 0)); // red->orange
+		addParticleModifier(new ColorParticleModifier<Entity>(0, 0.5f, 1, 1, 0.9f, 0, 0.1f, 0)); // yellow->red
+		addParticleModifier(new ColorParticleModifier<Entity>(0.5f, 1.0f, 1, 1, 0, 0.5f, 0, 0)); // red->orange
 		addParticleModifier(new ColorParticleModifier<Entity>(1.5f, 2.0f, 1, 0.7f, 0.5f, 0.7f, 0, 0.7f)); // orange->gray
 		addParticleModifier(new AlphaParticleModifier<Entity>(0, 0.1f, 0, 1)); // show
 		addParticleModifier(new AlphaParticleModifier<Entity>(2.0f, 2.5f, 1, 0.5f)); // hide

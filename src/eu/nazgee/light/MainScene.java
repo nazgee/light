@@ -29,6 +29,7 @@ import org.andengine.util.modifier.ease.EaseStrongOut;
 import android.opengl.GLES20;
 import eu.nazgee.props.Rocket;
 import eu.nazgee.props.RocketFlame;
+import eu.nazgee.props.RocketFlameLight;
 import eu.nazgee.utils.OffscreenFramebuffer;
 import eu.nazgee.utils.SimpleTracker;
 
@@ -80,7 +81,9 @@ public class MainScene extends Scene{
 		// ==== Prepare shadow 
 		Sprite shadow = populateShadow(pTexturesLibrary, pCamera, pVertexBufferObject);
 		attachChild(mFramebuffer);
-//		attachChild(shadow);
+		attachChild(shadow);
+		RocketFlameLight flameslight = new RocketFlameLight(mRocket, pTexturesLibrary.getLightFlames(), pVertexBufferObject);
+		mFramebuffer.attachChild(flameslight);
 
 		SimpleTracker tracker = new SimpleTracker(mTorch, mRocket);
 		registerUpdateHandler(tracker);

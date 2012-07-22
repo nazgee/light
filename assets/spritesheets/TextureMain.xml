@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <texture version="1" file="TextureMain.png" type="bitmap" width="1024" height="1024" pixelformat="RGBA_8888" minfilter="linear" magfilter="linear" wrapt="clamp" wraps="clamp" premultiplyalpha="false">
     <!-- Created with TexturePacker http://texturepacker.com -->
-    <!-- $TexturePacker:SmartUpdate:8d9d418c2810f6fb7dbb26962c7aec29$ -->
+    <!-- $TexturePacker:SmartUpdate:955ee7b712a126f40407d2c5a64619cb$ -->
     <textureregion id="0" src="bg/bg.png" x="4" y="4" width="512" height="512" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="512" srcheight="512"/>
-    <textureregion id="1" src="light/blink.png" x="4" y="956" width="64" height="64" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="64" srcheight="64"/>
-    <textureregion id="2" src="light/shockwave.png" x="74" y="956" width="64" height="64" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="64" srcheight="64"/>
-    <textureregion id="3" src="misc/burst.png" x="198" y="956" width="32" height="32" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="32" srcheight="32"/>
-    <textureregion id="4" src="misc/flare.png" x="4" y="720" width="128" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="128" srcheight="128"/>
-    <textureregion id="5" src="misc/target.png" x="144" y="956" width="48" height="48" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="48" srcheight="48"/>
-    <textureregion id="6" src="props/rocket.png" x="208" y="822" width="96" height="96" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="96" srcheight="96"/>
-    <textureregion id="7" src="props/sun.png" x="4" y="522" width="192" height="192" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="192" srcheight="192"/>
-    <textureregion id="8" src="props/surface-01.png" x="138" y="720" width="96" height="96" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="96" srcheight="96"/>
-    <textureregion id="9" src="props/surface-05.png" x="106" y="854" width="96" height="96" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="96" srcheight="96"/>
-    <textureregion id="10" src="props/surface-11.png" x="4" y="854" width="96" height="96" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="96" srcheight="96"/>
+    <textureregion id="1" src="light/blink.png" x="74" y="956" width="64" height="64" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="64" srcheight="64"/>
+    <textureregion id="2" src="light/radial.png" x="4" y="956" width="64" height="64" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="64" srcheight="64"/>
+    <textureregion id="3" src="light/shockwave.png" x="144" y="956" width="64" height="64" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="64" srcheight="64"/>
+    <textureregion id="4" src="misc/burst.png" x="214" y="978" width="32" height="32" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="32" srcheight="32"/>
+    <textureregion id="5" src="misc/flare.png" x="4" y="720" width="128" height="128" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="128" srcheight="128"/>
+    <textureregion id="6" src="misc/target.png" x="214" y="924" width="48" height="48" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="48" srcheight="48"/>
+    <textureregion id="7" src="props/rocket.png" x="208" y="822" width="96" height="96" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="96" srcheight="96"/>
+    <textureregion id="8" src="props/sun.png" x="4" y="522" width="192" height="192" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="192" srcheight="192"/>
+    <textureregion id="9" src="props/surface-01.png" x="138" y="720" width="96" height="96" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="96" srcheight="96"/>
+    <textureregion id="10" src="props/surface-05.png" x="106" y="854" width="96" height="96" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="96" srcheight="96"/>
+    <textureregion id="11" src="props/surface-11.png" x="4" y="854" width="96" height="96" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="96" srcheight="96"/>
 </texture>

@@ -14,7 +14,7 @@ public abstract class BaseMoveTo implements IMoveTo {
 	// ===========================================================
 	protected final Animator mAnimator;
 	private MovementParam mMovementParam;
-	private MovementListener mMovementListener;
+	private IMovementListener mMovementListener;
 	private final RunnableHandler mRunnableHandler;
 
 	// ===========================================================
@@ -54,11 +54,11 @@ public abstract class BaseMoveTo implements IMoveTo {
 		this.mMovementParam = mMovementParam;
 	}
 
-	public MovementListener getMovementListener() {
+	public IMovementListener getMovementListener() {
 		return mMovementListener;
 	}
 
-	public void setMovementListener(MovementListener mMovementListener) {
+	public void setMovementListener(IMovementListener mMovementListener) {
 		this.mMovementListener = mMovementListener;
 	}
 	// ===========================================================
@@ -83,10 +83,13 @@ public abstract class BaseMoveTo implements IMoveTo {
 		}
 	}
 
+	synchronized public boolean isMoving() {
+		return mAnimator.isAnimating();
+	}
 	// ===========================================================
 	// Inner and Anonymous Classes
 	// ===========================================================
-	static public interface MovementListener {
+	static public interface IMovementListener {
 		public void onDestination(BaseMoveTo pBaseMoveTo);
 	}
 

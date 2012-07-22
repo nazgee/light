@@ -28,6 +28,7 @@ import org.andengine.util.modifier.ease.EaseStrongOut;
 
 import android.opengl.GLES20;
 import eu.nazgee.props.Rocket;
+import eu.nazgee.props.RocketFlame;
 import eu.nazgee.utils.OffscreenFramebuffer;
 import eu.nazgee.utils.SimpleTracker;
 
@@ -64,6 +65,8 @@ public class MainScene extends Scene{
 
 		// prepare a Rocket
 		mRocket = new Rocket(100, 100, pTexturesLibrary.getRocket(), pVertexBufferObject);
+		RocketFlame flames = new RocketFlame(mRocket, pTexturesLibrary.getRocketFlames(), pVertexBufferObject);
+		attachChild(flames);
 		attachChild(mRocket);
 
 		setOnSceneTouchListener(new IOnSceneTouchListener() {

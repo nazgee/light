@@ -65,6 +65,10 @@ public class TexturesLibrary {
 		return mSpritesheetMain.getTexturePackTextureRegionLibrary().get(TextureMain.LIGHT_SHOCKWAVE_ID);
 	}
 
+	public ITextureRegion getRocketFlames() {
+		return mSpritesheetMain.getTexturePackTextureRegionLibrary().get(TextureMain.MISC_BURST_ID);
+	}
+
 	public ITextureRegion getBoxFace() {
 		return mBoxFaceTextureRegion;
 	}

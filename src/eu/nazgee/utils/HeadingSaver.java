@@ -9,16 +9,18 @@ public class HeadingSaver implements IUpdateHandler {
 	// ===========================================================
 	// Constants
 	// ===========================================================
-	public static final float MIN_SPEED_DEFAULT = 5;
+	protected static final float MIN_SPEED_DEFAULT = 5;
 	// ===========================================================
 	// Fields
 	// ===========================================================
-	private final Entity mEntity;
+	protected final Entity mEntity;
+
 	private float lastX;
 	private float lastY;
 	private final float mMinSpeed;
 	private float mDeltaX;
 	private float mDeltaY;
+	private float mTime;
 
 	// ===========================================================
 	// Constructors
@@ -50,6 +52,7 @@ public class HeadingSaver implements IUpdateHandler {
 			lastY = mEntity.getY();
 			mDeltaX = dX;
 			mDeltaY = dY;
+			mTime = pSecondsElapsed;
 		}
 	}
 
@@ -58,7 +61,20 @@ public class HeadingSaver implements IUpdateHandler {
 		if (angle < 0) {
 			angle += MathConstants.PI_TWICE; /* 360 degrees. */
 		}
-		return angle;
+		return MathUtils.radToDeg(angle);
+	}
+
+	synchronized public float getSpeed() {
+		final float speed = MathUtils.length(mDeltaX, mDeltaY) / mTime;
+		return speed;
+	}
+
+	synchronized public float getVelocityX() {
+		return mDeltaX / mTime;
+	}
+
+	synchronized public float getVelocityY() {
+		return mDeltaY / mTime;
 	}
 
 	@Override

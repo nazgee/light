@@ -5,10 +5,13 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
+import eu.nazgee.utils.Animator;
+import eu.nazgee.utils.BaseMoveTo;
+import eu.nazgee.utils.BaseMoveTo.IMovementListener;
 import eu.nazgee.utils.BaseMoveTo.MovementParam.eConstraintType;
 import eu.nazgee.utils.BezzierMoveTo;
+import eu.nazgee.utils.DampedMoveByModifier;
 import eu.nazgee.utils.HeadingToRotation;
-import eu.nazgee.utils.IMoveTo;
 
 public class Rocket extends Sprite {
 
@@ -19,8 +22,12 @@ public class Rocket extends Sprite {
 	// ===========================================================
 	// Fields
 	// ===========================================================
-	final IMoveTo mMoveTo;
-	RunnableHandler mRunnableHandler = new RunnableHandler();
+	final Animator mIdleAnimator = new Animator(this);
+	final BaseMoveTo mMoveTo;
+	final HeadingToRotation mHeadingToRotation = new HeadingToRotation(this);
+	final RunnableHandler mRunnableHandler = new RunnableHandler();
+
+	float mVelocityMax = 120;
 	// ===========================================================
 	// Constructors
 	// ===========================================================
@@ -28,9 +35,17 @@ public class Rocket extends Sprite {
 			final VertexBufferObjectManager pVertexBufferObjectManager) {
 		super(pX, pY, pTextureRegion, pVertexBufferObjectManager);
 
-		mMoveTo = new BezzierMoveTo(this, new BezzierMoveTo.MovementParam(eConstraintType.VELOCITY, 200, 100), mRunnableHandler);
+		mMoveTo = new BezzierMoveTo(this, new BezzierMoveTo.MovementParam(eConstraintType.VELOCITY, mVelocityMax, 100), mRunnableHandler);
+		mMoveTo.setMovementListener(new IMovementListener() {
+			@Override
+			public void onDestination(BaseMoveTo pBaseMoveTo) {
+				if (!mMoveTo.isMoving()) {
+					mIdleAnimator.run(new DampedMoveByModifier(1, mHeadingToRotation.getVelocityX(), mHeadingToRotation.getVelocityY(), 0.01f));
+				}
+			}
+		});
 
-		registerUpdateHandler(new HeadingToRotation(this));
+		registerUpdateHandler(mHeadingToRotation);
 		registerUpdateHandler(mRunnableHandler);
 	}
 
@@ -46,7 +61,12 @@ public class Rocket extends Sprite {
 	 * @return ETA
 	 */
 	public float flyTo(final float pX, final float pY) {
+		mIdleAnimator.stop();
 		return mMoveTo.moveTo(pX, pY);
+	}
+
+	public boolean isFlying() {
+		return mMoveTo.isMoving();
 	}
 
 	// ===========================================================

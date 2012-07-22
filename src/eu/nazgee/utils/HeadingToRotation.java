@@ -1,23 +1,16 @@
 package eu.nazgee.utils;
 
-import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.entity.Entity;
-import org.andengine.util.math.MathConstants;
-import org.andengine.util.math.MathUtils;
 
-public class HeadingToRotation implements IUpdateHandler {
+public class HeadingToRotation extends HeadingSaver {
 	// ===========================================================
 	// Constants
 	// ===========================================================
-	public static final float MIN_SPEED_DEFAULT = 5;
+
 	// ===========================================================
 	// Fields
 	// ===========================================================
-	private final Entity mEntity;
-	private float lastX;
-	private float lastY;
 	private final float mRotationOffset;
-	private final float mMinSpeed;
 
 	// ===========================================================
 	// Constructors
@@ -31,9 +24,8 @@ public class HeadingToRotation implements IUpdateHandler {
 	}
 
 	public HeadingToRotation(final Entity pEntity, final float pRotationOffset, final float pMinSpeed) {
-		mEntity = pEntity;
+		super(pEntity, pMinSpeed);
 		mRotationOffset = pRotationOffset;
-		mMinSpeed = pMinSpeed;
 	}
 
 	// ===========================================================
@@ -45,24 +37,10 @@ public class HeadingToRotation implements IUpdateHandler {
 	// ===========================================================
 	@Override
 	public void onUpdate(final float pSecondsElapsed) {
-		final float dX = mEntity.getX() - lastX;
-		final float dY = mEntity.getY() - lastY;
-		final float speed = MathUtils.length(dX, dY) / pSecondsElapsed;
-
-		if (speed > mMinSpeed) {
-			float angle = MathUtils.atan2(dY, dX);
-			lastX = mEntity.getX();
-			lastY = mEntity.getY();
-			if (angle < 0) {
-				angle += MathConstants.PI_TWICE; /* 360 degrees. */
-			}
-			mEntity.setRotation(-MathUtils.radToDeg(angle) + mRotationOffset);
-		}
+		super.onUpdate(pSecondsElapsed);
+		mEntity.setRotation(-getHeadingDeg() + mRotationOffset);
 	}
 
-	@Override
-	public void reset() {
-	}
 	// ===========================================================
 	// Methods
 	// ===========================================================
